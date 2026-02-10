@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #fff5f7;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Slow "Gentle Breeze" Background Animation */
+        @keyframes float-bg {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-110vh) translateX(40px) rotate(30deg); opacity: 0; }
+        }
+
+        .heart-bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-heart {
+            position: absolute;
+            bottom: -50px;
+            color: #f472b6;
+            opacity: 0;
+            animation: float-bg linear infinite;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .no-btn-transition {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* The Invisible Boundary Card */
+        #no-boundary {
+            position: relative;
+            width: 320px;
+            height: 240px;
+            margin-top: 1rem;
+            border-radius: 1rem;
+            border: 2px solid transparent; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        /* Custom Audio Player Styling */
+        audio {
+            width: 100%;
+            height: 40px;
+            border-radius: 20px;
+        }
+        audio::-webkit-media-controls-panel {
+            background-color: #fce7f3; /* Pink-100 */
+        }
+        audio::-webkit-media-controls-play-button {
+            background-color: #ec4899; /* Pink-500 */
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="heart-bg-container">
+        <svg class="bg-heart w-8 h-8" style="left: 5%; animation-duration: 20s; animation-delay: -2s;" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path></svg>
+        <svg class="bg-heart w-4 h-4" style="left: 15%; animation-duration: 18s; animation-delay: -15s;" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path></svg>
+        <svg class="bg-heart w-10 h-10" style="left: 25%; animation-duration: 25s; animation-delay: -10s;" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path></svg>
+        <svg class="bg-heart w-6 h-6" style="left: 35%; animation-duration: 22s; animation-delay: -5s;" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path></svg>
+        <svg class="bg-heart w-12 h-12" style="left: 45%; animation-duration: 28s; animation-delay: -12s;" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path></svg>
+        <svg class="bg-heart w-5 h-5" style="left: 55%; animation-duration: 19s; animation-delay: -8s;" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path></svg>
+        <svg class="bg-heart w-9 h-9" style="left: 65%; animation-duration: 24s; animation-delay: -20s;" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path></svg>
+        <svg class="bg-heart w-7 h-7" style="left: 75%; animation-duration: 21s; animation-delay: -4s;" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path></svg>
+        <svg class="bg-heart w-11 h-11" style="left: 85%; animation-duration: 26s; animation-delay: -18s;" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path></svg>
+        <svg class="bg-heart w-4 h-4" style="left: 95%; animation-duration: 17s; animation-delay: -2s;" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path></svg>
+    </div>
+
+    <div class="max-w-md w-full text-center">
+        
+        <div id="screen-ask" class="screen active flex-col items-center gap-4">
+            <div class="text-6xl mb-4 floating">🐥</div>
+            <h1 class="text-3xl font-bold text-pink-600 px-4">Will You Be My Valentine?</h1>
+            
+            <div id="no-boundary">
+                <button id="yes-btn" onclick="handleYesClick()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-10 rounded-full shadow-lg transition-transform active:scale-95 z-10">
+                    Yes
+                </button>
+                <button id="no-btn" onclick="triggerNo()" onmouseover="moveNoButton()" class="no-btn-transition bg-gray-200 text-gray-700 font-bold py-3 px-10 rounded-full shadow-md">
+                    No
+                </button>
+            </div>
+        </div>
+
+        <div id="screen-no" class="screen flex-col items-center gap-6">
+            <div class="text-6xl mb-4">🐻❄️</div>
+            <h2 class="text-2xl font-bold text-gray-800">I don't accept No as an Answer</h2>
+            <p class="text-pink-500 italic">Try again, cutie! ❤️</p>
+            <button onclick="changeScreen('screen-ask')" class="text-sm underline text-gray-400 mt-4">Go back</button>
+        </div>
+
+        <div id="screen-choices" class="screen flex-col items-center gap-8">
+            <div class="text-5xl mb-2">🥰</div>
+            <h2 class="text-2xl font-bold text-pink-600">Choose a Gift Nigi!</h2>
+            <div class="grid grid-cols-3 gap-4 w-full px-4 mt-4">
+                <div onclick="changeScreen('screen-gift-1')" class="gift-box cursor-pointer bg-white p-6 rounded-2xl shadow-md border-2 border-pink-100 transition-all text-4xl">🎁</div>
+                <div onclick="changeScreen('screen-gift-2')" class="gift-box cursor-pointer bg-white p-6 rounded-2xl shadow-md border-2 border-pink-100 transition-all text-4xl">🎁</div>
+                <div onclick="changeScreen('screen-gift-3')" class="gift-box cursor-pointer bg-white p-6 rounded-2xl shadow-md border-2 border-pink-100 transition-all text-4xl">🎁</div>
+            </div>
+        </div>
+
+        <div id="screen-gift-1" class="screen flex-col items-center gap-6">
+            <div class="bg-white w-full max-w-xs rounded-2xl p-6 shadow-2xl text-left border border-pink-200">
+                
+                <div class="w-full aspect-square rounded-lg mb-4 flex items-center justify-center overflow-hidden bg-pink-50">
+                    <img src="WhatsApp Image 2026-02-10 at 6.27.10 PM.jpeg" 
+                         alt="Us" 
+                         class="w-full h-full object-cover">
+                </div>
+                
+                <h3 class="text-gray-800 font-bold text-xl mb-1 text-center">Our Song</h3>
+                <p class="text-pink-500 text-sm mb-4 text-center">Press play!</p>
+
+                <div class="w-full">
+                   <audio controls src="SpotiDownloader.com - Kyon - Pritam.mp3" class="w-full outline-none"></audio>
+                </div>
+
+            </div>
+            <button onclick="changeScreen('screen-choices')" class="bg-white px-6 py-2 rounded-full shadow-sm text-pink-500 font-semibold border border-pink-100">Go Back</button>
+        </div>
+
+        <div id="screen-gift-2" class="screen flex-col items-center gap-6">
+            <div class="flex gap-4 floating">
+                <div class="text-8xl">💐</div>
+                <div class="text-8xl">🧁</div>
+            </div>
+            <h2 class="text-2xl font-bold text-pink-600">Got This For You </h2>
+            <p class="text-gray-600 px-8 italic">"Main khoya rehta hoon teri yaadon mein, my nigger, Tere saath har pal feels a little bit bigger. Zulfein teri jaise gehri raat ho kali, Jab tu saath chale, toh chamak uthti hai har gali.
+
+Tu deewaron pe dhoop jaisi, meri chipkali, Tujhe dekhte hi khil jati hai mere dil ki kali. Tu sukoon hai mera, tu hi mera junoon, Tere bina ab main kaise kahin bhi jiyun?"</p>
+            <button onclick="changeScreen('screen-choices')" class="bg-white px-6 py-2 rounded-full shadow-sm text-pink-500 font-semibold border border-pink-100">Go Back</button>
+        </div>
+
+        <div id="screen-gift-3" class="screen flex-col items-center gap-6">
+            <div class="bg-white p-8 rounded-3xl shadow-xl border-t-8 border-pink-400 relative">
+                <div class="absolute -top-4 -right-4 text-4xl transform rotate-12">💌</div>
+                <p class="text-gray-700 leading-relaxed text-left text-sm italic">
+                    In your eyes, I have found a home where my soul finally feels at rest. Every moment spent with you is a beautiful reminder that true happiness exists, and I am so grateful to walk this path by your side. You are the melody that my heart beats to and the light that guides me through every storm. Thank you for loving me so completely and for making even the simplest days feel like a dream come true. I love you more than words could ever express, now and for all the days to come. I will always hold your hand and walk with you for lifetime. I give you kissies, hickkies and everything a couple does. I always feel that you might get uncomfortable if i do so, you know yaar yahi sikha kr bada kiya jata hai ki ladkiyo ko touch ni krte so i always felt that ki kahi tumhe kabhi uncomfortable na ho ya mai tharki na lagu. Ab se every time I will find an opportunity I will do everything a couple does.
+                            Love you my Ashi my kuchupuchhu
+                </p>
+                <div class="mt-6 flex justify-center gap-2">
+                    <span>💋</span><span>💋</span><span>💋</span>
+                </div>
+            </div>
+            <button onclick="changeScreen('screen-choices')" class="bg-white px-6 py-2 rounded-full shadow-sm text-pink-500 font-semibold border border-pink-100">Go Back</button>
+        </div>
+
+    </div>
+
+    <script>
+        let hoverCount = 0;
+
+        function changeScreen(screenId) {
+            // Note: We are using display:none to hide screens.
+            // HTML5 Audio elements continue playing even if their parent container is hidden (display:none).
+            // This ensures the music won't stop when going back.
+            
+            document.querySelectorAll('.screen').forEach(s => {
+                s.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+            
+            if(screenId === 'screen-ask') {
+                const btn = document.getElementById('no-btn');
+                const yesBtn = document.getElementById('yes-btn');
+                
+                btn.style.position = 'static';
+                btn.style.left = 'auto';
+                btn.style.top = 'auto';
+                btn.style.display = 'block';
+                yesBtn.innerText = 'Yes';
+                hoverCount = 0;
+            }
+        }
+
+        // New logic to handle the "Yes" click with conditions
+        function handleYesClick() {
+            const yesBtn = document.getElementById('yes-btn');
+            
+            // If they haven't even tried to hover the No button yet
+            if (hoverCount === 0) {
+                yesBtn.innerText = 'Pehle No krna tha yaawr';
+            } else {
+                changeScreen('screen-choices');
+            }
+        }
+
+        function triggerNo() {
+            changeScreen('screen-no');
+        }
+
+        function moveNoButton() {
+            const btn = document.getElementById('no-btn');
+            const yesBtn = document.getElementById('yes-btn');
+            const boundary = document.getElementById('no-boundary');
+            
+            hoverCount++;
+
+            // If they had the "Pehle No" message and now hovered, reset it to Yes
+            if (hoverCount > 0 && yesBtn.innerText === 'Pehle No krna tha yaawr') {
+                yesBtn.innerText = 'Yes';
+            }
+
+            if (hoverCount >= 10) {
+                btn.style.display = 'none';
+                yesBtn.innerText = 'Battamiz';
+                return;
+            }
+
+            if (btn.style.position !== 'absolute') {
+                btn.style.position = 'absolute';
+            }
+
+            const bw = boundary.clientWidth;
+            const bh = boundary.clientHeight;
+            
+            const maxX = bw - btn.offsetWidth;
+            const maxY = bh - btn.offsetHeight;
+            
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+
+            btn.style.left = newX + 'px';
+            btn.style.top = newY + 'px';
+        }
+    </script>
+</body>
+</html>
